@@ -1,0 +1,43 @@
+name: iOS CI (Flutter)
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-ipa:
+    runs-on: macos-latest
+
+    steps:
+      # 1️⃣ 拉取代码
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      # 2️⃣ 安装 Flutter SDK（stable 通道）
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2     # :contentReference[oaicite:3]{index=3}
+        with:
+          channel: stable
+
+      # 3️⃣ 获取依赖
+      - run: flutter pub get
+
+      # 4️⃣ 编译 iOS（跳过签名）
+      - run: flutter build ios --release --no-codesign
+
+      # 5️⃣ 手动打包 IPA
+      - name: Create unsigned IPA
+        run: |
+          cd build/ios/iphoneos
+          mkdir Payload
+          cp -r Runner.app Payload/
+          zip -r ../../Runner-unsigned.ipa Payload
+
+      # 6️⃣ 上传产物
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-unsigned-ipa
+          path: build/ios/Runner-unsigned.ipa
+          retention-days: 7
