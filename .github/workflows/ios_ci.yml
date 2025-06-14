@@ -23,21 +23,12 @@ jobs:
       # 3️⃣ 获取依赖
       - run: flutter pub get
 
-      # 4️⃣ 编译 iOS（跳过签名）
-      - run: flutter build ios --release --no-codesign
+      # 4️⃣ 编译 iOS，Flutter 自动产出 IPA
+      - run: flutter build ipa --no-codesign
 
-      # 5️⃣ 手动打包 IPA
-      - name: Create unsigned IPA
-        run: |
-          cd build/ios/iphoneos
-          mkdir Payload
-          cp -r Runner.app Payload/
-          zip -r ../../Runner-unsigned.ipa Payload
-
-      # 6️⃣ 上传产物
+      # 5️⃣ 上传产物
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ios-unsigned-ipa
-          path: build/ios/Runner-unsigned.ipa
-          retention-days: 7
+          path: build/ios/ipa/*.ipa
