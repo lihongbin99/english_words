@@ -1,4 +1,4 @@
-package com.example.english_words
+package com.lihongbin.english_words
 
 import io.flutter.embedding.android.FlutterActivity
 
