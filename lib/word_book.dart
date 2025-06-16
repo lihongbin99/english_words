@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'database_helper.dart';
 
 class WordBookPage extends StatefulWidget {
@@ -9,6 +10,8 @@ class WordBookPage extends StatefulWidget {
 }
 
 class _WordBookPageState extends State<WordBookPage> {
+  FlutterTts flutterTts = FlutterTts();
+
   final _db = DatabaseHelper();
   List<Map<dynamic, dynamic>> _words = [];
   String _reciteType = 'today';
@@ -124,7 +127,7 @@ class _WordBookPageState extends State<WordBookPage> {
             elevation: 4,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(12),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -135,9 +138,29 @@ class _WordBookPageState extends State<WordBookPage> {
                       children: [
                         GestureDetector(
                           onTap: () {setState(() {word['show'] = !word['show'];});},
-                          child: Text(word['word'] as String, style: textTheme.headlineSmall),
+                          child: Text(
+                            word['word'] as String,
+                            style: textTheme.headlineSmall?.copyWith(height: 1.0),
+                          ),
                         ),
-                        Text(word['symbols'] as String, style: textTheme.titleMedium?.copyWith(color: colorScheme.primary)),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              word['symbols'] as String,
+                              style: textTheme.titleMedium?.copyWith(color: colorScheme.primary, height: 1.0),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.volume_up_outlined, size: 24),
+                              color: colorScheme.primary,
+                              tooltip: '朗读',
+                              padding: EdgeInsets.zero,
+                              onPressed: () { flutterTts.speak(word['word'] as String); },
+                            ),
+                          ],
+                        ),
                         if (word['show'])
                           const SizedBox(height: 16),
                         if (word['show']) 

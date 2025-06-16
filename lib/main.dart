@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'database_helper.dart';
 import 'word_book.dart';
 
@@ -29,6 +30,8 @@ class WordLearningPage extends StatefulWidget {
 }
 
 class _WordLearningPageState extends State<WordLearningPage> {
+  FlutterTts flutterTts = FlutterTts();
+
   int _day = 0;
   String _reciteType = "recite";
   // 单词总数
@@ -364,7 +367,7 @@ class _WordLearningPageState extends State<WordLearningPage> {
               elevation: 4,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -372,8 +375,22 @@ class _WordLearningPageState extends State<WordLearningPage> {
                       onTap: () {show();},
                       child: Text(_word, style: textTheme.headlineMedium),
                     ),
-                    Text(_phonetic, style: textTheme.titleMedium?.copyWith(color: colorScheme.primary)),
-                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(_phonetic, style: textTheme.titleMedium?.copyWith(color: colorScheme.primary, height: 1.0)),
+                        const SizedBox(width: 8),
+                        IconButton(
+                          icon: const Icon(Icons.volume_up_outlined, size: 24),
+                          color: colorScheme.primary,
+                          tooltip: '朗读',
+                          padding: EdgeInsets.zero,
+                          onPressed: () {flutterTts.speak(_word);},
+                        ),
+                      ],
+                    ),
                     ..._examples.map((e) => Padding(
                           padding: const EdgeInsets.symmetric(vertical: 2),
                           child: Text('• $e'),
