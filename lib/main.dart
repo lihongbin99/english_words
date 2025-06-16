@@ -69,6 +69,15 @@ class _WordLearningPageState extends State<WordLearningPage> {
   @override
   void initState() {
     super.initState();
+    flutterTts.setSharedInstance(true);
+    flutterTts.setIosAudioCategory(IosTextToSpeechAudioCategory.playback,
+      [
+        IosTextToSpeechAudioCategoryOptions.allowBluetooth,
+        IosTextToSpeechAudioCategoryOptions.allowBluetoothA2DP,
+        IosTextToSpeechAudioCategoryOptions.mixWithOthers
+      ],
+      IosTextToSpeechAudioMode.voicePrompt
+    );
     _loadStats();
   }
 
@@ -377,8 +386,8 @@ class _WordLearningPageState extends State<WordLearningPage> {
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(_phonetic, style: textTheme.titleMedium?.copyWith(color: colorScheme.primary, height: 1.0)),
                         const SizedBox(width: 8),
