@@ -117,7 +117,6 @@ class _WordBookPageState extends State<WordBookPage> {
           if (word['conjunction']       != '') _definitions.add('conjunction: ${word['conjunction']}');
           if (word['abbreviation']      != '') _definitions.add('abbreviation: ${word['abbreviation']}');
           if (word['numeral']           != '') _definitions.add('numeral: ${word['numeral']}');
-          if (word['remake']            != '') _definitions.add('remake: ${word['remake']}');
 
           if (word['example1'] != '') _examples.add(word['example1']);
           if (word['example2'] != '') _examples.add(word['example2']);

@@ -135,7 +135,6 @@ class _WordLearningPageState extends State<WordLearningPage> {
       if (word['conjunction']       != '') definitions.add('conjunction: ${word['conjunction']}');
       if (word['abbreviation']      != '') definitions.add('abbreviation: ${word['abbreviation']}');
       if (word['numeral']           != '') definitions.add('numeral: ${word['numeral']}');
-      if (word['remake']            != '') definitions.add('remake: ${word['remake']}');
       if (word['example1_translation']            != '') definitions.add('example: ${word['example1_translation']}');
       if (word['example2_translation']            != '') definitions.add('example: ${word['example2_translation']}');
       if (word['example3_translation']            != '') definitions.add('example: ${word['example3_translation']}');
